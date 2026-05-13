@@ -1,0 +1,121 @@
+.signup-container {
+  padding: 1.5rem 1rem;
+  background: #111827 !important;
+}
+
+.signup-wrapper {
+  max-width: 620px;
+}
+
+.signup-card {
+  max-height: calc(100vh - 3rem);
+  overflow-y: auto;
+  background: #1f2937 !important;
+  border-color: #374151 !important;
+  color: #f3f4f6 !important;
+}
+
+.brand-subtitle {
+  max-width: 320px;
+  margin: 0 auto;
+  color: #d1d5db !important;
+}
+
+.signup-form {
+  margin-bottom: 0;
+}
+
+.form-section {
+  border-top: 1px solid var(--border-color);
+  padding-top: 1.5rem;
+}
+
+.form-section:first-of-type {
+  border-top: none;
+  padding-top: 0;
+}
+
+.form-section h3 {
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-group:last-child {
+  margin-bottom: 0;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.form-row .form-group {
+  margin-bottom: 0;
+}
+
+.signup-card .form-group label {
+  color: #f3f4f6 !important;
+}
+
+.signup-card .form-input,
+.signup-card .signup-textarea {
+  background: #111827 !important;
+  color: #f3f4f6 !important;
+  border-color: #4b5563 !important;
+}
+
+.signup-card .form-input::placeholder,
+.signup-card .signup-textarea::placeholder {
+  color: #9ca3af !important;
+}
+
+.signup-card .brand-title {
+  color: #10b981 !important;
+}
+
+.signup-card .error-message {
+  background-color: rgba(239, 68, 68, 0.12) !important;
+  color: #f87171 !important;
+  border-color: #f87171 !important;
+}
+
+.signup-card .success-message {
+  background-color: rgba(16, 185, 129, 0.12) !important;
+  color: #10b981 !important;
+  border-color: #10b981 !important;
+}
+
+.signup-card .signup-login-link {
+  color: #d1d5db !important;
+}
+
+.signup-card .form-link {
+  color: #10b981 !important;
+}
+
+.signup-textarea {
+  min-height: 104px;
+  resize: vertical;
+}
+
+.signup-login-link {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+@media (max-width: 480px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .signup-container {
+    padding: 1rem;
+  }
+}

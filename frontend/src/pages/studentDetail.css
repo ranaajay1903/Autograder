@@ -1,0 +1,66 @@
+/* Student Detail View Styling */
+
+.student-detail-container {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 0;
+  height: 100vh;
+  background: var(--bg-primary);
+}
+
+.student-detail-sidebar {
+  background: var(--bg-secondary);
+  border-right: 1px solid var(--border);
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.student-detail-content {
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.file-list-button {
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  text-align: left;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  margin-bottom: 6px;
+  transition: all 0.2s ease;
+}
+
+.file-list-button:hover {
+  background: rgba(16, 185, 129, 0.05);
+  border-color: var(--primary);
+}
+
+.file-list-button.active {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+  font-weight: 600;
+}
+
+.code-viewer {
+  background: var(--dark-secondary);
+  padding: 16px;
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
+@media (max-width: 768px) {
+  .student-detail-container {
+    grid-template-columns: 1fr;
+  }
+
+  .student-detail-sidebar {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+}
