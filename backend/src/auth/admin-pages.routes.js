@@ -5,8 +5,38 @@ const adminController = require("./admin.controller");
 
 const router = express.Router();
 
-// All admin routes are protected and require admin role
-router.use(verify, checkRole("admin"));
+// All admin page routes require authentication. Most require admin below, but
+// a few grading/test-case routes are also available to graders.
+router.use(verify);
+
+// ==================== SHARED GRADING ROUTES ====================
+// Get submission details for grading (includes code files)
+router.get("/grade-submission/:submissionId", checkRole("admin", "grader"), adminController.getSubmissionCodeFiles);
+
+// Update submission marks
+router.patch("/grade-submission/:submissionId/marks", checkRole("admin", "grader"), adminController.updateSubmissionMarks);
+
+// Run tests on submission
+router.post("/grade-submission/:submissionId/run-tests", checkRole("admin", "grader"), adminController.runTestCases);
+
+// Run single test on submission
+router.post("/grade-submission/:submissionId/run-single-test", checkRole("admin", "grader"), adminController.runSingleTest);
+
+// ==================== SHARED TEST CASES MANAGEMENT PAGE ====================
+// Get test cases for assignment
+router.get("/test-cases-management/:assignmentId", checkRole("admin", "grader"), adminController.getTestCases);
+
+// Create test case
+router.post("/test-cases-management/:assignmentId", checkRole("admin", "grader"), adminController.createTestCase);
+
+// Update test case
+router.patch("/test-cases-management/:testCaseId", checkRole("admin", "grader"), adminController.updateTestCase);
+
+// Delete test case
+router.delete("/test-cases-management/:testCaseId", checkRole("admin", "grader"), adminController.deleteTestCase);
+
+// Remaining admin page routes require admin role.
+router.use(checkRole("admin"));
 
 // ==================== ADMIN DASHBOARD PAGE ====================
 // Main dashboard with system statistics
@@ -47,21 +77,8 @@ router.get("/submissions-list/:assignmentId/run-all-tests/status", adminControll
 // Run tests for all submissions in an assignment
 router.post("/submissions-list/:assignmentId/run-all-tests", adminController.runBulkTestsStandard);
 
-// ==================== GRADE SUBMISSION PAGE ====================
-// Get submission details for grading (includes code files)
-router.get("/grade-submission/:submissionId", checkRole("admin", "grader"), adminController.getSubmissionCodeFiles);
-
-// Update submission marks
-router.patch("/grade-submission/:submissionId/marks", checkRole("admin", "grader"), adminController.updateSubmissionMarks);
-
 // Toggle marks visibility for specific submission
 router.patch("/grade-submission/:submissionId/visibility", adminController.toggleViewMarks);
-
-// Run tests on submission
-router.post("/grade-submission/:submissionId/run-tests", checkRole("admin", "grader"), adminController.runTestCases);
-
-// Run single test on submission
-router.post("/grade-submission/:submissionId/run-single-test", checkRole("admin", "grader"), adminController.runSingleTest);
 
 // ==================== USER MANAGEMENT PAGE ====================
 // Get all users
@@ -78,19 +95,6 @@ router.patch("/users-management/:userId/role", adminController.updateUserRole);
 
 // Delete user
 router.delete("/users-management/:userId", adminController.deleteUser);
-
-// ==================== TEST CASES MANAGEMENT PAGE ====================
-// Get test cases for assignment
-router.get("/test-cases-management/:assignmentId", checkRole("admin", "grader"), adminController.getTestCases);
-
-// Create test case
-router.post("/test-cases-management/:assignmentId", checkRole("admin", "grader"), adminController.createTestCase);
-
-// Update test case
-router.patch("/test-cases-management/:testCaseId", checkRole("admin", "grader"), adminController.updateTestCase);
-
-// Delete test case
-router.delete("/test-cases-management/:testCaseId", checkRole("admin", "grader"), adminController.deleteTestCase);
 
 // ==================== REPORTS PAGE ====================
 // Get marks report for assignment

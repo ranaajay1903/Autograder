@@ -5,22 +5,31 @@ require('dotenv').config();
 let sequelize;
 
 if (process.env.DATABASE_URL) {
-  sequelize = new Sequelize(process.env.DATABASE_URL, {
-    dialect: 'postgres',
-    logging: false,
-    dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: false
-      }
-    },
-    pool: {
-      max: 10,
-      min: 1,
-      acquire: 120000,
-      idle: 10000
+  const databaseUrl = new URL(process.env.DATABASE_URL);
+
+  sequelize = new Sequelize(
+    decodeURIComponent(databaseUrl.pathname.slice(1)),
+    decodeURIComponent(databaseUrl.username),
+    decodeURIComponent(databaseUrl.password),
+    {
+      host: databaseUrl.hostname,
+      port: Number(databaseUrl.port || 5432),
+      dialect: 'postgres',
+      logging: false,
+      dialectOptions: {
+        ssl: {
+          require: true,
+          rejectUnauthorized: false,
+        },
+      },
+      pool: {
+        max: 10,
+        min: 1,
+        acquire: 120000,
+        idle: 10000,
+      },
     }
-  });
+  );
 } else {
   sequelize = new Sequelize(
     process.env.DB_NAME || 'autograder_db',

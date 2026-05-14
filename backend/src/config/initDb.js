@@ -70,8 +70,6 @@ const initializeDatabase = async () => {
     
     GraderSolutionFile.belongsTo(GraderSolution, { foreignKey: 'solutionId' });
     
-    Assignment.hasMany(GraderSolution, { foreignKey: 'assignmentId', as: 'graderSolutions' });
-    
     console.log('🔄 Syncing database models...');
     await sequelize.sync();
     console.log('✅ All tables created/updated');
