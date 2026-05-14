@@ -190,32 +190,6 @@ exports.getUserCourses = async (req, res) => {
         joinedAt: cu.joinedAt,
       }));
 
-    // Legacy compatibility: if an admin user has no course at all, create one.
-    if (
-      req.user.role === "admin" &&
-      createdCourses.length === 0 &&
-      enrolledCoursesFormatted.length === 0
-    ) {
-      const legacyCourse = await Course.create({
-        name: "Legacy Course",
-        code: `LEGACY-${userId}`,
-        description: "Auto-created course for legacy data compatibility.",
-        adminId: userId,
-      });
-
-      await CourseUser.create({
-        courseId: legacyCourse.id,
-        userId,
-        role: "admin",
-      });
-
-      return res.json({
-        createdCourses: [legacyCourse],
-        enrolledCourses: [{ ...legacyCourse.dataValues, userRole: "admin" }],
-        courses: [{ ...legacyCourse.dataValues, userRole: "admin" }],
-      });
-    }
-
     // Merge while removing duplicates (admins are often both creator + enrolled).
     const byCourseId = new Map();
     for (const course of createdCourses) {
